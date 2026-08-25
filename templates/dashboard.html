@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | B Team Quiz{% endblock %}
+{% block content %}
+<div class="hero"><div><p class="eyebrow">B TEAM • DAILY PRACTICE</p><h1>Welcome, {{ session.get('name') }} 👋</h1><p>30 Biology & Life Science questions every day.</p></div><div class="date-box">{{ today }}</div></div>
+<div class="stats">
+<div class="stat"><b>30</b><span>Questions</span></div><div class="stat"><b>{{ quiz_minutes }} min</b><span>Time Limit</span></div><div class="stat"><b>1/day</b><span>Attempt</span></div>
+</div>
+{% if attempt %}
+<div class="card result-card"><div class="trophy">🏆</div><h2>Today's quiz completed</h2><div class="score-big">{{ attempt['score'] }}/{{ attempt['total'] }}</div><p>{{ "%.1f"|format(attempt['score']*100/attempt['total']) }}% {% if rank %}• Today's rank: <b>#{{ rank }}</b>{% endif %}</p><p>Come back tomorrow for a new challenge.</p></div>
+{% else %}
+<div class="card"><h2>Today's Challenge</h2><ul><li>30 questions selected randomly for you</li><li>25-minute time limit</li><li>1 mark for each correct answer</li><li>Only one submission today</li></ul><a class="btn primary" href="{{ url_for('quiz') }}">🚀 Start Quiz</a></div>
+{% endif %}
+<div class="card"><h2>Your Recent History</h2><div class="table-wrap"><table><thead><tr><th>Date</th><th>Score</th><th>Percentage</th><th>Time</th></tr></thead><tbody>
+{% for h in history %}<tr><td>{{ h['quiz_date'] }}</td><td><b>{{ h['score'] }}/{{ h['total'] }}</b></td><td>{{ "%.1f"|format(h['score']*100/h['total']) }}%</td><td>{{ h['seconds_taken'] // 60 }}m {{ h['seconds_taken'] % 60 }}s</td></tr>{% else %}<tr><td colspan="4">No previous quizzes.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}
