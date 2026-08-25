@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-{% block title %}Admin Control Center{% endblock %}
-{% block content %}
-<div class="hero"><div><p class="eyebrow">ADMIN CONTROL CENTER</p><h1>🧬 B Team Quiz Portal</h1><p>Complete control over students, questions and results.</p></div><div class="date-box">{{ today }}</div></div>
-<div class="stats"><div class="stat"><b>{{ stats.users }}</b><span>Students</span></div><div class="stat"><b>{{ stats.questions }}</b><span>Active Questions</span></div><div class="stat"><b>{{ stats.attempts_today }}</b><span>Today's Attempts</span></div></div>
-<div class="admin-links"><a class="btn" href="{{ url_for('admin_users') }}">👥 Students</a><a class="btn" href="{{ url_for('admin_questions') }}">🧬 Question Bank</a><a class="btn" href="{{ url_for('admin_results') }}">📊 Results</a><a class="btn primary" href="{{ url_for('export_csv') }}">⬇ Export CSV</a></div>
-<div class="card"><h2>Overall Leaderboard</h2><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Student</th><th>User ID</th><th>Quizzes</th><th>Total Score</th><th>Average</th></tr></thead><tbody>{% for r in scores %}<tr><td><b>#{{ loop.index }}</b></td><td>{{ r['name'] }}</td><td>{{ r['user_id'] }}</td><td>{{ r['quizzes_taken'] }}</td><td>{{ r['total_score'] }}</td><td>{{ r['average_percent'] }}%</td></tr>{% else %}<tr><td colspan="6">No students yet.</td></tr>{% endfor %}</tbody></table></div></div>
-{% endblock %}
