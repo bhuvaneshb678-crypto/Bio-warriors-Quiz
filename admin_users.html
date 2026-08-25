@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Manage Students | B Team{% endblock %}
+{% block content %}
+<h1>Manage Students</h1>
+<div class="grid-2">
+<div class="card">
+<h2>Create Student Account</h2>
+<form method="post">
+<label>User ID</label><input name="user_id" required placeholder="B001">
+<label>Student Name</label><input name="name" required placeholder="Student name">
+<label>Password</label><input type="password" name="password" required placeholder="Temporary password">
+<button class="btn primary" type="submit">Create Account</button>
+</form>
+</div>
+<div class="card">
+<h2>Student Accounts</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Name</th><th>User ID</th><th>Status</th><th>Action</th></tr></thead>
+<tbody>
+{% for u in users %}
+<tr>
+<td>{{ u['name'] }}</td><td>{{ u['user_id'] }}</td>
+<td>{{ 'Active' if u['active'] else 'Disabled' }}</td>
+<td><form method="post" action="{{ url_for('toggle_user', user_pk=u['id']) }}"><button class="btn small" type="submit">{{ 'Disable' if u['active'] else 'Enable' }}</button></form></td>
+</tr>
+{% endfor %}
+</tbody></table></div>
+</div>
+</div>
+{% endblock %}
